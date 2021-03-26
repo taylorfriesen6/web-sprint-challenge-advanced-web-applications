@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
-  const [form, setForm] = useState({username: 'Lambda School', password: 'i<3Lambd4'}); // REMOVE CREDENTIALS LATER!
+  const [form, setForm] = useState({username: '', password: ''}); // REMOVE CREDENTIALS LATER!
   const history = useHistory();
 
   useEffect(()=>{
