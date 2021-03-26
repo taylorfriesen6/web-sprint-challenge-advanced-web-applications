@@ -22,7 +22,7 @@ const Login = () => {
     Axios.post('http://localhost:5000/api/login', form)
       .then(res => {
         localStorage.setItem('token', res.data.payload);
-        history.push('/asfd');
+        history.push('/bubbles');
       })
       .catch(err => {
         console.log(err);
