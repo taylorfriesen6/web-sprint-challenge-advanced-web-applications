@@ -48,6 +48,24 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const deleteColor = color => {
+    const name = color.color;
+    const id = colors.find(c => c.color == name)?.id;
+    if (id !== undefined) {
+      axiosWithAuth().delete(`/colors/${id}`)
+        .then(res => {
+          console.log(res);
+          axiosWithAuth().get('/colors')
+          .then(res => {
+            updateColors(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
 
   return (
