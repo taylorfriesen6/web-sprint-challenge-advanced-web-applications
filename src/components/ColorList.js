@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import {axiosWithAuth} from '../utils/axiosWithAuth';
+
 import Color from './Color';
 import EditMenu from './EditMenu';
 
@@ -20,7 +22,29 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-
+    const name = e.target[0].value;
+    const hex = e.target[1].value;
+    const thisColor = colors.find(color => color.color==name);
+    if (thisColor === undefined) {
+      alert(`${name} is not in the color list!`);
+    } else {
+      const id = thisColor.id;
+      const newValue = {color:name, code:{hex:hex}, id:id};
+      console.log(newValue);
+      axiosWithAuth().put(`/colors/${id}`, newValue)
+        .then(res => {
+          axiosWithAuth().get('/colors')
+          .then(res => {
+            updateColors(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   };
 
   const deleteColor = color => {
